@@ -37,6 +37,38 @@ server.get('/allpokemon', function (req, res) {
     })
 });
 
+server.get('/allWildPokemon', function (req, res) {
+    request.query("SELECT * from pokemon WHERE STATUS = 'Wild'", (error, data) => {
+        if (error) {
+            console.error();
+        } else {
+            res.send(data.recordsets[0]);
+        }
+    })
+});
+
+server.post('/catch', function(req, res) {
+    const serial = req.body.serial;
+    // TODO add the request for a new column 'caught' and set the value to true
+    request.query(`update pokemon set STATUS = 'Caught' where SERIAL = ${serial}`, (error, data) => {
+        if (error) {
+            console.error();
+        } else {
+            res.send(data);
+        }
+    });
+})
+
+server.get('/pokemon-boxes', function(req, res) {
+    request.query("SELECT * FROM pokemon WHERE STATUS = 'Caught'", (error, data) => {
+        if (error) {
+            console.error();
+        } else {
+            res.send(data.recordsets[0]);
+        }
+    });
+})
+
 server.listen(port, (error) => {
     if (error) {
         console.console.error();
