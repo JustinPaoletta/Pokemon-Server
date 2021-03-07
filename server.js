@@ -63,7 +63,7 @@ server.post('/isUserNew', function(req, res) {
     const user = req.body.user;
     const bool = req.body.user.email_verified = true ? 1 : 0;
     request.query(
-        `IF NOT EXISTS(SELECT 1 FROM users WHERE nickname = N'${user.nickname}')
+        `IF NOT EXISTS(SELECT 1 FROM users WHERE email = N'${user.email}')
             BEGIN
                 INSERT INTO users VALUES ('${user.nickname}', '${user.name}', '${user.picture}', '${user.updated_at}', '${user.email}',
                 ${bool}, '${user.sub}');
