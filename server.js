@@ -57,7 +57,24 @@ server.post('/catch', function(req, res) {
             res.send(data);
         }
     });
-})
+});
+
+server.post('/isUserNew', function(req, res) {
+    const user = req.body.user;
+    const bool = req.body.user.email_verified = true ? 1 : 0;
+    request.query(
+        `IF NOT EXISTS(SELECT 1 FROM users WHERE nickname = N'${user.nickname}')
+            BEGIN
+                INSERT INTO users VALUES ('${user.nickname}', '${user.name}', '${user.picture}', '${user.updated_at}', '${user.email}',
+                ${bool}, '${user.sub}');
+            END`, (error, data) => {
+        if (error) {
+            console.error();
+        } else {
+            res.send(data);
+        }
+    })
+});
 
 server.get('/pokemon-boxes', function(req, res) {
     request.query("SELECT * FROM pokemon WHERE STATUS = 'Caught'", (error, data) => {
