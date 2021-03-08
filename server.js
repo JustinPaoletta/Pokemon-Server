@@ -27,8 +27,9 @@ const request = sql.connect(config, (error) => {
     }
 });
 
-server.get('/allpokemon', function (req, res) {
-    request.query('SELECT * from pokemon', (error, data) => {
+server.get('/allpokemon:user', function (req, res) {
+    const user = req.params.user.slice(1);
+    request.query(`SELECT * from ${user}`, (error, data) => {
         if (error) {
             console.error();
         } else {
@@ -37,8 +38,9 @@ server.get('/allpokemon', function (req, res) {
     })
 });
 
-server.get('/allWildPokemon', function (req, res) {
-    request.query("SELECT * from pokemon WHERE STATUS = 'Wild'", (error, data) => {
+server.get('/allWildPokemon:user', function (req, res) {
+    const user = req.params.user.slice(1);
+    request.query(`SELECT * from ${user} WHERE STATUS = 'Wild'`, (error, data) => {
         if (error) {
             console.error();
         } else {
@@ -49,8 +51,8 @@ server.get('/allWildPokemon', function (req, res) {
 
 server.post('/catch', function(req, res) {
     const serial = req.body.serial;
-    // TODO add the request for a new column 'caught' and set the value to true
-    request.query(`update pokemon set STATUS = 'Caught' where SERIAL = ${serial}`, (error, data) => {
+    const user = req.body.user;
+    request.query(`UPDATE ${user} set STATUS = 'Caught' where SERIAL = ${serial}`, (error, data) => {
         if (error) {
             console.error();
         } else {
@@ -67,6 +69,9 @@ server.post('/isUserNew', function(req, res) {
             BEGIN
                 INSERT INTO users VALUES ('${user.nickname}', '${user.name}', '${user.picture}', '${user.updated_at}', '${user.email}',
                 ${bool}, '${user.sub}');
+                SELECT *
+                INTO ${user.nickname}
+                FROM pokemon
             END`, (error, data) => {
         if (error) {
             console.error();
@@ -76,8 +81,9 @@ server.post('/isUserNew', function(req, res) {
     })
 });
 
-server.get('/pokemon-boxes', function(req, res) {
-    request.query("SELECT * FROM pokemon WHERE STATUS = 'Caught'", (error, data) => {
+server.get('/pokemon-boxes:user', function(req, res) {
+    const user = req.params.user.slice(1);
+    request.query(`SELECT * FROM ${user} WHERE STATUS = 'Caught'`, (error, data) => {
         if (error) {
             console.error();
         } else {
