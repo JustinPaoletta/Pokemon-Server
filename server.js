@@ -22,7 +22,7 @@ const request = sql.connect(config, (error) => {
     if (error) {
         console.error();
     } else {
-        console.log('connected');
+        console.log('connected to database');
         return new sql.Request();
     }
 });
@@ -90,7 +90,29 @@ server.get('/pokemon-boxes:user', function(req, res) {
             res.send(data.recordsets[0]);
         }
     });
-})
+});
+
+server.put('/changeName', function(req, res) {
+    request.query(`UPDATE ${req.body.user} set NAME = '${req.body.newName}' WHERE NAME = '${req.body.pokemon.NAME}'`, (error, data) => {
+        if (error) {
+            console.error();
+        } else {
+            res.send(data);
+        }
+    })
+});
+
+server.delete('/releasePokemon/:user/:name', function(req, res) {
+    const user = req.params.user.slice(1);
+    const name = req.params.name.slice(1);
+    request.query(`Update ${user} set STATUS = 'Wild' WHERE NAME = '${name}'`, (error, data) => {
+        if (error) {
+            console.error();
+        } else {
+            res.send(data);
+        }
+    })
+});
 
 server.listen(port, (error) => {
     if (error) {
