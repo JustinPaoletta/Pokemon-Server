@@ -1,0 +1,25 @@
+{
+  "name": "pokemon-server",
+  "version": "1.0.0",
+  "description": "pokemon-world",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/JustinPaoletta/pokemon-server.git"
+  },
+  "author": "justinpaoletta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/JustinPaoletta/pokemon-server/issues"
+  },
+  "homepage": "https://gitlab.com/JustinPaoletta/pokemon-server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  }
+}
