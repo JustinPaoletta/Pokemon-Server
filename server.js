@@ -8,11 +8,11 @@ const port = 8000;
 const sql = require('mysql');
 
 const connection = sql.createConnection({
-    host     : 'pokemon-world-1.ce32gg8cgwze.us-east-2.rds.amazonaws.com',
-    user     : 'admin',
-    password : 'x',
-    port     : '3306',
-    database : 'pokemon_world'
+    host     : '****',
+    user     : '****',
+    password : '****',
+    port     : '****',
+    database : '****'
   });
 
   connection.connect(function(err) {
